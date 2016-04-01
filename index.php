@@ -22,6 +22,7 @@
 		</style>
 		<script src="jquery.min.js"></script>
 		<script type="text/javascript">
+			var path = "";
 			window.onload = function() {
 				paintBackground();
 			}
@@ -36,7 +37,7 @@
 				context.fillStyle="#FFFFFF";
 				context.fillRect(0,0,comicPane.width,comicPane.height);
 				var defImage = new Image();
-				defImage.src = "stare.jpg";
+				defImage.src = path + "stare.jpg";
 
 				//when image is loaded, draw.
 				defImage.onload = function()
@@ -65,6 +66,7 @@
 			var bg = new Image();
 			var isComicPanelInitialized = false;
 			var isUploaded = true;
+			var timeout = 0;
 
 			function updateCanvas() //picks an image from the list, draws canvas when image is ready.
 			{
@@ -85,7 +87,7 @@
 							 }
 							?>'
 				images = JSON.parse(images);
-				bg.src = 'backgrounds/' + images[Math.floor(Math.random()*images.length)];
+				bg.src = path + 'backgrounds/' + images[Math.floor(Math.random()*images.length)];
 				bg.onload = function() {
 					drawCanvas();
 				};
@@ -149,7 +151,14 @@
 						drawLine(context,line,x,y);
 						y = y + lineHeight;
 					}
+
 					isUploaded = false; //flag so you can't spam the same image a bunch of times
+					if(timeout == 0)
+					{
+						var sendButton = document.getElementById("imgurButton"); 
+						sendButton.disabled = false;
+						sendButton.value="Upload to Imgur";
+					}
 			}
 
 
@@ -219,7 +228,17 @@
         function enableButton() //enables the upload to imgur button. There is a timeout to discourage spamming.
         {
 			var sendButton = document.getElementById("imgurButton"); 
-			sendButton.disabled = false;
+			timeout = 0;
+			if(!isUploaded)
+			{
+				sendButton.disabled = false;
+				sendButton.value="Upload to Imgur";
+			}
+			else
+			{
+				sendButton.value="Uploaded";
+			}
+				
         }
        	function uploadToImgur(){ //code to send an image to imgur. Not my api key.
 			// this is all standard Imgur API; only LC-specific thing is the image
@@ -228,10 +247,10 @@
 			{
 				return;
 			}
-
+			timeout = 5000;
 			var sendButton = document.getElementById("imgurButton");
 			sendButton.disabled = true;
-			setTimeout(enableButton, 8000);
+			sendButton.value= "Uploading";
 			var comicPane = document.getElementById("watermarkCanvas");
 			var imgSend = comicPane.toDataURL('image/png').split(',')[1];
 			$.ajax({
@@ -254,9 +273,13 @@
 			      imgurLink.textContent = 'imgur link';
 			      isUploaded = true;
 			      updateThumbs(data.data.id);
+			      sendButton.value = "Uploaded (wait 5s)";
+				  setTimeout(enableButton, timeout);
 			    },
 			    error: function(data) {
 			      console.log(data);
+			      sendButton.value = "Upload to Imgur";
+			      sendButton.disabled = false;
 			    }
 			  });
 		};
@@ -380,7 +403,7 @@
 						<input type="radio" name="position" onchange="drawCanvas()" value="bottom" checked>Bottom
 						<button type="button" class="io" id="addImage" onclick="updateCanvas()">Generate Thought</button>
 						<a id="img-download" class="io" download="deep_thought.png" href="">Download Image</a>
-						<input type="button" id="imgurButton" class="io" onclick="uploadToImgur()" value="Upload to Imgur">
+						<input type="button" id="imgurButton" class="io" onclick="uploadToImgur()" disabled=true value="Upload to Imgur">
 						<a href="" class="io" target="_blank" id="imgurURL"></a>
 					</form>
 				</p>
