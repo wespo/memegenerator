@@ -19,6 +19,7 @@
 			.verticalGallery {width:100px; height: 1000px; position: relative; top:100px; left:1000px;}
 			.preview {visibility: invisible}
 			.note{font-size: 0.5em; color: grey;}
+			.thumbnail{width: 60px; height: 55px; display: inline-block; background: no-repeat; background-size: 42px 42px; background-position: 5px 8px;}
 		</style>
 		<script src="jquery.min.js"></script>
 		<script type="text/javascript">
@@ -121,8 +122,6 @@
 
 					// Set the text style to that to which we are accustomed
 				    context.lineWidth  = 5;
-				    var fontHeight = 20;
-				    context.font = fontHeight + 'pt Bitter';
 				    context.strokeStyle = 'black';
 				    context.fillStyle = 'white';
 				    context.textAlign = 'center';
@@ -131,8 +130,17 @@
 					// Draw the text
 					var text = document.getElementById('custom-text').value;
 					//text = text.toUpperCase(); //all caps mode
-					lines = getLines(context,text,comicPane.width * 0.8, context.font); //break up text across several lines so it doesn't ooverflow.
-					var lineHeight = fontHeight + 5; //set up pointer to correct position on image
+					var lines = [];
+					var fontHeight = 20;
+					do
+					{
+						context.font = fontHeight + 'pt Bitter';
+						lines = getLines(context,text,comicPane.width * 0.9, context.font); //break up text across several lines so it doesn't ooverflow.
+						fontHeight--;
+					} while((lines.length * fontHeight > (comicPane.height / 8)) && fontHeight > 8)
+					fontHeight++;
+					
+					var lineHeight = fontHeight*1.75; //set up pointer to correct position on image
 					var textHeight = lines.length * lineHeight;
 					if(getPosition() == 0.95){
 						var textBottom = comicPane.height;
@@ -394,7 +402,7 @@
 	</script>
 	</head>
 	<body><center>
-				<h1>Rainbow Dash Has An Important Thought</h1>
+				<h1><div class="thumbnail" style="background-image: url('dashsurprised.png')"></div><span style="vertical-align: top;">Rainbow Dash Has An Important Thought</span></h1>
 				<canvas id="watermarkCanvas" width="1024" height="600"style="border:1px red solid;"></canvas>
 				<p>
 					<textarea id="custom-text" class="io" type="textarea" style="border:1px red solid;" rows="4" cols="104">enter some text</textarea><br>
