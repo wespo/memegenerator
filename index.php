@@ -405,11 +405,10 @@
 				<h1><div class="thumbnail" style="background-image: url('dashsurprised.png')"></div><span style="vertical-align: top;">Rainbow Dash Has An Important Thought</span></h1>
 				<canvas id="watermarkCanvas" width="1024" height="600"style="border:1px red solid;"></canvas>
 				<p>
-					<textarea id="custom-text" class="io" type="textarea" style="border:1px red solid;" rows="4" cols="104">enter some text</textarea><br>
+					<textarea id="custom-text" class="io" type="textarea" oninput="drawCanvas()" style="border:1px red solid;" rows="4" cols="104">enter some text</textarea><br>
 					 <form>
 						<input type="radio" name="position" onchange="drawCanvas()" value="top">Top 
 						<input type="radio" name="position" onchange="drawCanvas()" value="bottom" checked>Bottom
-						<button type="button" class="io" id="addImage" onclick="drawCanvas()">Update Text</button>
 						<button type="button" class="io" id="addImage" onclick="updateCanvas()">Generate Thought</button>
 						<a id="img-download" class="io" download="deep_thought.png" href="">Download Image</a>
 						<input type="button" id="imgurButton" class="io" onclick="uploadToImgur()" disabled=true value="Upload to Imgur">
