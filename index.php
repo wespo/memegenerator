@@ -409,6 +409,7 @@
 					 <form>
 						<input type="radio" name="position" onchange="drawCanvas()" value="top">Top 
 						<input type="radio" name="position" onchange="drawCanvas()" value="bottom" checked>Bottom
+						<button type="button" class="io" id="addImage" onclick="drawCanvas()">Update Text</button>
 						<button type="button" class="io" id="addImage" onclick="updateCanvas()">Generate Thought</button>
 						<a id="img-download" class="io" download="deep_thought.png" href="">Download Image</a>
 						<input type="button" id="imgurButton" class="io" onclick="uploadToImgur()" disabled=true value="Upload to Imgur">
@@ -423,8 +424,9 @@
 				</p>
 				<p>
 					<a href="http://sscs6000.com" class="io" target="_blank">The Original SSCS</a><br>
+					<a href="mailto:webmaster@sscs6000.com" class="io">Requests? Questions? Comments? Smell rotten eggs? For the first three, drop me a line here.</a><br>
 					<span class="note">Special thanks to /u/LunarWolves who stayed up late one night testing and providing feedback. Your support means that at least one person will be amused by this thing. <img src="luna.png"/></span><br>
-					<span class="note">Site Copyright 2016, intended as a parody work, all images and characters copyright their respective owners.</span>
+					<span class="note">Site Copyright 2016, intended as a parody work, all images and characters copyright their respective owners.</span><br>
 				</p>
 
 				
