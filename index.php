@@ -20,6 +20,7 @@
 			.preview {visibility: invisible}
 			.note{font-size: 0.5em; color: grey;}
 			.thumbnail{width: 60px; height: 55px; display: inline-block; background: no-repeat; background-size: 42px 42px; background-position: 5px 8px;}
+			.about{width:1000px; font-size:0.75em; text-align: justify;}
 		</style>
 		<script src="jquery.min.js"></script>
 		<script type="text/javascript">
@@ -93,6 +94,14 @@
 					drawCanvas();
 				};
 			};
+
+			function onInputChange()
+			{
+				if(isComicPanelInitialized)
+				{
+					drawCanvas();
+				}
+			}
 
 			function drawCanvas() //draws the image on the canvas.
 			{
@@ -405,10 +414,10 @@
 				<h1><div class="thumbnail" style="background-image: url('dashsurprised.png')"></div><span style="vertical-align: top;">Rainbow Dash Has An Important Thought</span></h1>
 				<canvas id="watermarkCanvas" width="1024" height="600"style="border:1px red solid;"></canvas>
 				<p>
-					<textarea id="custom-text" class="io" type="textarea" oninput="drawCanvas()" style="border:1px red solid;" rows="4" cols="104">enter some text</textarea><br>
+					<textarea id="custom-text" class="io" type="textarea" oninput="onInputChange()" style="border:1px red solid;" rows="4" cols="104">enter some text</textarea><br>
 					 <form>
-						<input type="radio" name="position" onchange="drawCanvas()" value="top">Top 
-						<input type="radio" name="position" onchange="drawCanvas()" value="bottom" checked>Bottom
+						<input type="radio" name="position" onchange="onInputChange()" value="top">Top 
+						<input type="radio" name="position" onchange="onInputChange()" value="bottom" checked>Bottom
 						<button type="button" class="io" id="addImage" onclick="updateCanvas()">Generate Thought</button>
 						<a id="img-download" class="io" download="deep_thought.png" href="">Download Image</a>
 						<input type="button" id="imgurButton" class="io" onclick="uploadToImgur()" disabled=true value="Upload to Imgur">
@@ -421,6 +430,14 @@
 					<h4>Rainbow's Favorite Important Thoughts</h4>
 					<div id="bestof" class="horizontalGallery"></div>
 				</p>
+				<h4>About:</h4>
+				<div class = "about">
+					A few years back, I made a reaction image from a screengrab of an episode -- <a href="https://i.imgur.com/FIfaO1z.png">this one</a>. 
+					I can't even remember what episode it is from. When I made it, there was a typo: I intended to say "these are some high threadcount sheets", 
+					but instead, I accidentally wrote "there are some high threadcount sheets". I fell in love with the idea of a deep, existential question 
+					keeping Rainbow Dash up at night, and I've recycled that image a number of times since. The other day, it struck me that I could make a tool 
+					to share RD's other deep realizations, and I needed a creative outlet. Thus, "Rainbow Dash Has An Important Thought" was born.
+				</div>
 				<p>
 					<a href="http://sscs6000.com" class="io" target="_blank">The Original SSCS</a><br>
 					<a href="mailto:webmaster@sscs6000.com" class="io">Requests? Questions? Comments? Smell rotten eggs? For the first three, drop me a line here.</a><br>
