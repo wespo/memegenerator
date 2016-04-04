@@ -358,47 +358,31 @@
 				thumObj.setAttribute("class", "thumb");
 				myNode.appendChild(a);
 				$(thumObj).hover(function(e){
-					this.t = this.title;
-					this.title = "";	
-					var c = (this.t != "") ? "<br/>" + this.t : "";
-		
-
+					$("#preview").remove();
 					var p = document.createElement('p');
 					p.id = 'preview'
 					
 					var bigThumb = new Image();
 					bigThumb.src = this.bigthumb;
 					bigThumb.setAttribute("class", "thumb");
+					bigThumb.alt = 'Image Preview'
+					p.appendChild(bigThumb);
 					bigThumb.onload = function(){
 						thumbHeight = bigThumb.height;
 						thumbWidth = bigThumb.width;
+						$(p).css("position","absolute")
+						//$(p).css("top", 100)
+						// $(p).css("left",100);
+						 .css("top", myNodeTop - thumbHeight - 30 + "px")
+						.css("left",(window.innerWidth/2 -  thumbWidth / 2+ xOffset) + "px")
+						$("body").append(p);
 					};
-					bigThumb.alt = 'Image Preview'
-					p.appendChild(bigThumb);
-
-
-					//$("body").append("<p id='preview'><img src='"+  +"' alt='Image preview' />"+ c +"</p>");
-					$("body").append(p);
-					$("#preview")
-						.css("position","absolute")
-						.css("top",(e.pageY - yOffset - thumbHeight) + "px")
-						.css("left",(e.pageX + xOffset) + "px")
-						// .css("top", myNodeTop - thumbHeight + "px")
-						// .css("left",(window.innerWidth/2 -  thumbWidth / 2+ xOffset) + "px")
-						.fadeIn("fast");						
+					//console.log("hover in");
 			    },
 				function(){
-					this.title = this.t;	
 					$("#preview").remove();
+					//console.log("hover out");
 			    });	
-				$(".thumb").mousemove(function(e){
-					$("#preview")
-						.css("position","absolute")
-						.css("top",(e.pageY - yOffset - thumbHeight) + "px")
-						.css("left",(e.pageX + xOffset) + "px");
-						// .css("top", myNodeTop - thumbHeight + "px")
-						// .css("left",(window.innerWidth/2 -  thumbWidth / 2+ xOffset) + "px")
-				});			
 			}
 			//console.log(Math.ceil(thumbs.length/10)*100);
 			myNode.style = "height: " + Math.ceil(thumbs.length/10)*100 +";";
