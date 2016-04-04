@@ -336,6 +336,8 @@
 			var thumbs = JSON.parse(thumbstring);
 			//first clear out existing thumnail div
 			var myNode = document.getElementById(node);
+			var myNodeTop = $("#" +node).offset().top;
+
 			while (myNode.firstChild) {
 			    myNode.removeChild(myNode.firstChild);
 			}
@@ -344,7 +346,6 @@
 			//then populate thumbnails with pictures
 			var baseURL = 'http://i.imgur.com/';
 			var extension = '.png';
-			
 			for(var thumb of thumbs) //generate thumbs
 			{
 				var a = document.createElement('a');
@@ -382,6 +383,8 @@
 						.css("position","absolute")
 						.css("top",(e.pageY - yOffset - thumbHeight) + "px")
 						.css("left",(e.pageX + xOffset) + "px")
+						// .css("top", myNodeTop - thumbHeight + "px")
+						// .css("left",(window.innerWidth/2 -  thumbWidth / 2+ xOffset) + "px")
 						.fadeIn("fast");						
 			    },
 				function(){
@@ -393,8 +396,12 @@
 						.css("position","absolute")
 						.css("top",(e.pageY - yOffset - thumbHeight) + "px")
 						.css("left",(e.pageX + xOffset) + "px");
+						// .css("top", myNodeTop - thumbHeight + "px")
+						// .css("left",(window.innerWidth/2 -  thumbWidth / 2+ xOffset) + "px")
 				});			
 			}
+			//console.log(Math.ceil(thumbs.length/10)*100);
+			myNode.style = "height: " + Math.ceil(thumbs.length/10)*100 +";";
 		}
 				
 
