@@ -1,6 +1,7 @@
 <?php
 	//read list of URLs
 	$filename = 'imgurURLs.txt';
+	$maxPics = 30;
 	if(isset($_GET['bestof'])) //allow alrternative path for best of. No auto-writing to best of.
 	{
 		$filename = 'bestofImgurURLs.txt';
@@ -12,7 +13,7 @@
 	$urls = json_decode($fileData);
 
 	//trim array to 10 elements if need be.
-	if(count($urls) > 10)
+	if(count($urls) > $maxPics)
 	{
 		array_pop($urls);
 	}
@@ -24,7 +25,7 @@
 		if(!in_array($newURL,$urls))
 		{
 			array_unshift($urls,$newURL);
-			if(count($urls) > 10) //keep array at 10 elements
+			if(count($urls) > $maxPics) //keep array at maxPics elements
 			{
 				array_pop($urls);
 			}
